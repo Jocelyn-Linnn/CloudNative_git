@@ -32,12 +32,19 @@ jobs:
 
       - name: Save predictions to file
         run: |
+          # 檢查 predictions 資料夾是否存在，不存在則創建
+          if [ ! -d "predictions" ]; then
+            mkdir predictions
+          fi
           mv predictions_xgboost.csv predictions/  # 將結果保存到 predictions 文件夾（根據需要修改）
 
-      - name: Commit and push predictions
+      - name: Checkout main branch and push predictions
         run: |
           git config --global user.name "jocelyn"
           git config --global user.email "jocelyn880926@gmail.com"
+
+          git checkout main  # 確保切換到 main 分支
+          git pull origin main  # 確保本地的 main 分支是最新的
           git add predictions/predictions_xgboost.csv
           git commit -m "Add predictions from GitHub Action"
           git push origin main  # 推送生成的預測結果回 GitHub
