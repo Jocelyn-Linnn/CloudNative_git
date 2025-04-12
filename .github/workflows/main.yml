@@ -1,0 +1,43 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main  # 在推送到 main 分支時觸發
+  pull_request:
+    branches:
+      - main  # 在對 main 分支發送 PR 時觸發
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 選擇運行的虛擬環境，這裡使用的是 Ubuntu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # 檢出代碼
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # 設置 Python 版本，根據需要更改
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip  # 升級 pip
+          pip install -r requirements.txt      # 安裝 requirements.txt 中列出的依賴
+
+      - name: Run Python script
+        run: |
+          python your_script.py  # 執行你的 Python 程式碼，將 `your_script.py` 替換為你的腳本名稱
+
+      - name: Save predictions to file
+        run: |
+          mv predictions_xgboost.csv predictions/  # 將結果保存到 predictions 文件夾（根據需要修改）
+
+      - name: Commit and push predictions
+        run: |
+          git config --global user.name "your_username"
+          git config --global user.email "your_email@example.com"
+          git add predictions/predictions_xgboost.csv
+          git commit -m "Add predictions from GitHub Action"
+          git push origin main  # 推送生成的預測結果回 GitHub
