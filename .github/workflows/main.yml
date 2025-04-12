@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Python script
         run: |
-          python your_script.py  # 執行你的 Python 程式碼，將 `your_script.py` 替換為你的腳本名稱
+          python test1.py  # 執行你的 Python 程式碼，將 `your_script.py` 替換為你的腳本名稱
 
       - name: Save predictions to file
         run: |
@@ -36,8 +36,8 @@ jobs:
 
       - name: Commit and push predictions
         run: |
-          git config --global user.name "your_username"
-          git config --global user.email "your_email@example.com"
+          git config --global user.name "jocelyn"
+          git config --global user.email "jocelyn880926@gmail.com"
           git add predictions/predictions_xgboost.csv
           git commit -m "Add predictions from GitHub Action"
           git push origin main  # 推送生成的預測結果回 GitHub
