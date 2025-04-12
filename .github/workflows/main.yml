@@ -43,8 +43,9 @@ jobs:
           git config --global user.name "jocelyn"
           git config --global user.email "jocelyn880926@gmail.com"
 
-          git checkout main  # 確保切換到 main 分支
-          git pull origin main  # 確保本地的 main 分支是最新的
+          # 確保切換到 main 分支並拉取最新更新
+          git fetch origin main
+          git checkout -B main origin/main  # 強制切換並確保本地 `main` 分支是最新的
           git add predictions/predictions_xgboost.csv
           git commit -m "Add predictions from GitHub Action"
           git push origin main  # 推送生成的預測結果回 GitHub
